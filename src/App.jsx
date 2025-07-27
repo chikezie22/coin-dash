@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import Header from './components/header';
-import CoinCard from './components/coin-card';
+import { BrowserRouter, Routes, Route } from 'react-router';
+import { Home } from './pages';
+
 const url = import.meta.env.VITE_API_URL;
 // const apikey = import.meta.env.VITE_API_KEY;
 const options = {
@@ -14,6 +15,7 @@ const App = () => {
   const [coins, setCoins] = useState([]);
   const [limit, setLimit] = useState(10);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   useEffect(() => {
     setIsLoading(true);
     const fetchCoins = async () => {
@@ -22,10 +24,13 @@ const App = () => {
           `${url}coins/markets?vs_currency=usd&per_page=${limit}&page=1`,
           options
         );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
         setCoins(data);
       } catch (error) {
-        console.log(error);
+        setError(error.message);
       } finally {
         setIsLoading(false);
       }
@@ -33,31 +38,14 @@ const App = () => {
     fetchCoins();
   }, [limit]);
   return (
-    <div>
-      <Header iimit={limit} setLimit={setLimit} />
-      <div className="max-w-[1440px] px-2.5 lg:px-5 py-2.5 space-y-5">
-        <div className="flex justify-center gap-2.5 sm:justify-between items-center flex-wrap ">
-          <h1 className="text-3xl font-bold">Coin Dash 🚀</h1>
-          <div className="font-medium text-slate-600 flex gap-2.5 text-nowrap max-sm:text-sm">
-            <p>Crypto currencies</p>
-            <p>Exchanges</p>
-            <p>Learn</p>
-            <p>Trade</p>
-          </div>
-        </div>
-        <div>
-          {isLoading ? (
-            <p>Loading .....</p>
-          ) : (
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-2.5 mx-auto lg:place-content-center">
-              {coins.map((coin) => (
-                <CoinCard coin={coin} key={coin.id} />
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={<Home coins={coins} setLimit={setLimit} isLoading={isLoading} error={error} />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
