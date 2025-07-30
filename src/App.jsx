@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router';
-import { Home } from './pages';
+import { Routes, Route } from 'react-router';
+import { About, Home, NotFound } from './pages';
+import Layout from './layout/layout';
 
 const url = import.meta.env.VITE_API_URL;
 // const apikey = import.meta.env.VITE_API_KEY;
@@ -38,14 +39,13 @@ const App = () => {
     fetchCoins();
   }, [limit]);
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={<Home coins={coins} setLimit={setLimit} isLoading={isLoading} error={error} />}
-        />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Layout limit={limit} setLimit={setLimit} />}>
+        <Route index element={<Home coins={coins} isLoading={isLoading} error={error} />} />
+        <Route path="about" element={<About />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
   );
 };
 
