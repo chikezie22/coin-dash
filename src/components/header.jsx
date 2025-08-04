@@ -17,7 +17,7 @@ const Header = ({ limit, setLimit }) => {
   const location = useLocation();
 
   return (
-    <header className="bg-green-50 p-4 sticky top-0">
+    <header className="bg-green-200 py-4 sticky top-0 left-0 right-0">
       <nav className="w-[90%] max-w-[1440px] mx-auto   flex justify-between items-center">
         <img src={Logo} alt="logo" className="h-[28px] w-auto" />
         <div className="flex items-center gap-5 ">

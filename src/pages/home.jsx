@@ -5,7 +5,7 @@ const Page = ({ isLoading, coins, error }) => {
     return <div>{error}</div>;
   }
   return (
-    <div>
+    <div className="space-y-5 mt-2.5">
       <div className="flex justify-center gap-2.5 sm:justify-between items-center flex-wrap ">
         <h1 className="text-3xl font-bold text-green-700">Coin Dash 🚀</h1>
         <div className="font-medium  flex gap-2.5 text-nowrap max-sm:text-sm text-green-300">
