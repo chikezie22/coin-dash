@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router';
-import { About, Home, NotFound } from './pages';
+import { About, Home, NotFound, CoinDetail } from './pages';
 import Layout from './layout/layout';
 
 const url = import.meta.env.VITE_API_URL;
@@ -37,12 +37,13 @@ const App = () => {
       }
     };
     fetchCoins();
-  }, [limit]);
+  }, [limit, url]);
   return (
     <Routes>
       <Route path="/" element={<Layout limit={limit} setLimit={setLimit} />}>
         <Route index element={<Home coins={coins} isLoading={isLoading} error={error} />} />
         <Route path="about" element={<About />} />
+        <Route path="coin/:id" element={<CoinDetail />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
