@@ -1,5 +1,5 @@
 import CoinCard from '../components/coin-card';
-import Header from '../components/header';
+import Spinner from '../components/spinner';
 const Page = ({ isLoading, coins, error }) => {
   if (error) {
     return <div>{error}</div>;
@@ -17,7 +17,7 @@ const Page = ({ isLoading, coins, error }) => {
       </div>
       <div>
         {isLoading ? (
-          <p>Loading .....</p>
+          <Spinner />
         ) : (
           <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-2.5 mx-auto lg:place-content-center">
             {coins.map((coin) => (

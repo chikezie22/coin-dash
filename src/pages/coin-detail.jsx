@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
+import Spinner from '../components/spinner';
+import CoinChart from '../components/coin-chart';
 
 const Page = () => {
   const [coin, setCoin] = useState('');
@@ -12,7 +14,7 @@ const Page = () => {
     setIsLoading(true);
     const fetchCoinDetail = async () => {
       try {
-        const response = await fetch(`${url}/coins/${id}`);
+        const response = await fetch(`${url}coins/${id}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -26,6 +28,7 @@ const Page = () => {
     };
     fetchCoinDetail();
   }, [id, url]);
+  if (isLoading) return <Spinner />;
   return (
     <div className="space-y-4">
       <Link to="/" className=" text-gray-500 font-medium">
@@ -61,6 +64,7 @@ const Page = () => {
         <p className="italic text-sm font-medium">
           Last Updated: {new Date(coin?.market_data?.last_updated).toLocaleString()}
         </p>
+        <CoinChart coinId={id} />
       </div>
     </div>
   );

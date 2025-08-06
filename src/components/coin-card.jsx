@@ -14,7 +14,7 @@ const CoinCard = ({ coin }) => {
       >
         <div
           className={`p-4 rounded-2xl border border-slate-300 shadow-md flex items-center gap-4 w-full cursor-pointer transition duration-500
-            ${isTouched ? 'bg-slate-800' : 'bg-green-50'} group-hover:bg-slate-800
+            ${isTouched ? 'bg-slate-800' : 'bg-green-50'} group-hover:bg-slate-800 
           `}
         >
           <img src={coin.image} alt={coin.name} className="h-10 w-10" />
